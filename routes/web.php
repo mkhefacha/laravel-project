@@ -35,3 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/hello', 'HomeController@index')->name('home');
 
+get('hi', function()
+{
+
+})
