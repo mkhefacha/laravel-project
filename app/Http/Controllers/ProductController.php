@@ -36,10 +36,14 @@ public function show($id)
     //$category=Category::whereId($id);
     return view('show')->with('product',$product)
                        ->with('category',Category::all());
-    }    
+    }
 
 
-public function edit($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id)
 {
 	$product=Product::findOrFail($id);
     return view('edit',compact('product'));
