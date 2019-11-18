@@ -11,41 +11,52 @@
 |
 */
 Route::get('/', function () {
-    return view('laravel');
+    return view('home');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 //produit
-Route::get('liste', 'ProductController@index')->name('produit.liste');
-Route::get('produit', 'ProductController@create')->name('produit.create');
+Route::get('liste', 'ProductController@index')->name('produit.liste');//->middleware('role:editor|admin|writer');
+Route::get('userliste', 'ProductController@listeuser');
+
+Route::get('produit', 'ProductController@create')->name('produit.create');//->middleware('role:writer|admin');
 Route::post('produit', 'ProductController@store')->name('produit.store');
-Route::get('produit/show/{id}', 'ProductController@show')->name('produit.show');
-Route::get('produit/edit/{id}', 'ProductController@edit')->name('produit.edit');
-Route::post('produit/update/{id}', 'ProductController@update')->name('produit.update');
-Route::get('produit/delete/{id}', 'ProductController@destroy')->name('produit.delete');
+Route::get('produit/show/{product}', 'ProductController@show')->name('produit.show');
+Route::get('produit/edit/{product}', 'ProductController@edit')->name('produit.edit');//->middleware('role:editor|admin');
+Route::put('produit/update/{product}', ['uses'=>'ProductController@update','as'=>'produit.update']);
+Route::delete('produit/delete/{id}', 'ProductController@destroy');
+Route::post('category/delete/{category}', 'ProductController@supprimer')->name('category.delete');
+
+Route::get('/collection', 'CollectionController@index');
+
 //category
 Route::get('category', 'CategoryController@create')->name('category.create');
 Route::post('category', 'CategoryController@store')->name('category.store');
 
+//user
+
+Route::get('login', 'LoginController@create')->name('login');
+Route::post('login', 'LoginController@store');
+Route::post('logout', 'LoginController@destroy')->name('logout');
+
+Route::get('register', 'RegisterController@showRegistrationForm');
+Route::Post('register', 'RegisterController@store')->name('register');
+
+Route::get('confirmation/{user}/{token}', 'ConfirmationController@store')->name('confirmation');
 
 
-
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+;
 
 Route::get('/hello', 'HomeController@index')->name('home');
 
-get('hi', function()
-{
 
-})
-//comment
 
-// new comment 
-get('tags', function()
-{
+Route::get('/home', 'HomeController@index')->name('home');
 
-})
+//session route
+Route::get('session/get','SessionController@accessSessionData');
+Route::get('session/set','SessionController@storeSessionData');
+Route::get('session/remove','SessionController@deleteSessionData');
+

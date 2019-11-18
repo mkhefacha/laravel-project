@@ -3,37 +3,64 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
-<div class="card uper">
-  <div class="card-header">
-    Edit product
-  </div>
-  <div class="card-body">
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-      </div><br />
-    @endif
-      <form method="post" action="{{route('produit.update',$product->id)}}">
-          @csrf
-          <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" class="form-control" name="name" value="{{$product->name}}"/>
-          </div> 
-          <div class="form-group">
-              <label for="quantity">Price :</label>
-              <input type="text" class="form-control" name="price" value="{{$product->price}}"/>
-          </div>
-          <button type="submit" class="btn btn-primary">Update product</button>
-      </form>
-  </div>
-</div>
+    <style>
+        .uper {
+            margin-top: 40px;
+        }
+    </style>
+    <div class="card uper">
+        <div class="card-header">
+            Edit product
+        </div>
+        <div class="card-body">
+            @include('layouts.errors')
+
+            {!! Form::model($product,['route' =>['produit.update',$product],'method'=>'post','enctype'=>'multipart/form-data'])!!}
+            <input type="hidden" name="_method" value="PUT">
+            @csrf
+            <div class="form-group">
+                {!! form::label('name','produit Name') !!}
+                {!! form::text('name',null,[
+                'class'=>'form-control'
+
+            ]) !!}
+            </div>
+
+
+
+            <div class="form-group">
+                {!! form::label('prix','produit Price') !!}
+                {!! form::text('price',null,[
+                'class'=>'form-control'
+
+            ]) !!}
+            </div>
+            <div class="form-group">
+                {!! form::label('image',"image d'annonce") !!}
+
+                    <img src="{{$product->image}}" class="img-thumbnail" width="10%" height="10%">
+
+
+            </div>
+
+
+            <div class="form-group">
+                {!!Form::label('category')!!}
+                {!! Form::select('category_id', $categories, null, ['class'=>'form-control'])
+                !!}
+            </div>
+
+            <div class="form-group">
+
+                {{Form::file("image", ["class" => "form-group",]) }}
+            </div>
+
+
+            {!! form::submit('mdoifier',['class'=>'btn btn-primary']) !!}
+
+            {!! form::close() !!}
+
+
+        </div>
+    </div>
 @endsection
