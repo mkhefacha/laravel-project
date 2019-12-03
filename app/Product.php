@@ -11,7 +11,8 @@ class Product extends Model
     public $table = 'products';
     //protected $fillable = ['name', 'price','slug','user_id','category_id'];
     protected $guarded = [];
-   // public $timestamps=false;
+
+    // public $timestamps=false;
     public function category()
     {
 
@@ -40,7 +41,6 @@ class Product extends Model
     }
 
 
-
     public function getRouteKeyname()
     {
         return 'slug';
@@ -53,10 +53,11 @@ class Product extends Model
 
     }
 
-      public function  scopeProductall($query){
+    public function scopeProductall($query)
+    {
         return $query->orderBy('created_at', 'asc')->paginate(4);
 
-      }
+    }
 
     /*  public static function created($request){
 

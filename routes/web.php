@@ -1,5 +1,6 @@
 <?php
 
+use carbon\carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,8 +11,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('home');
+});
+Route::get('test', function () {
+    $date=carbon::now();
+    dump($date);
 });
 
 //produit
@@ -26,7 +32,7 @@ Route::put('produit/update/{product}', ['uses'=>'ProductController@update','as'=
 Route::delete('produit/delete/{id}', 'ProductController@destroy');
 Route::post('category/delete/{category}', 'ProductController@supprimer')->name('category.delete');
 
-Route::get('/collection', 'CollectionController@index');
+
 
 //category
 Route::get('category', 'CategoryController@create')->name('category.create');
@@ -60,3 +66,10 @@ Route::get('session/get','SessionController@accessSessionData');
 Route::get('session/set','SessionController@storeSessionData');
 Route::get('session/remove','SessionController@deleteSessionData');
 
+
+Auth::routes();
+
+Route::get('/collection', 'CollectionController@index');
+
+
+Route::get('/home', 'HomeController@index')->name('home');

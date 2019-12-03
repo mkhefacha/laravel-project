@@ -10,13 +10,20 @@ use Illuminate\Support\Facades\DB;
 trait ModelScopes
 {
 
-    /* public function ScopeUserId()
+    public function ScopeUser()
 
-         return Product::where('user_id', '=', '1')
-             ->groupBy('user_id')
-             ->select('user_id', DB::Raw('count(id) as product_count'))
-             ->get();
-     }*/
+    {
+
+      /* return User::wherehas('products',function ($query) {
+            $query->where('name','iphon');
+        })->get();*/
+
+
+        return Product::where('user_id', '=', '2')
+            ->groupBy('user_id')
+            ->select('user_id', DB::Raw('count(id) as product_count'))
+            ->get();
+    }
 
     // public function ScopeUserId($query)
     //{

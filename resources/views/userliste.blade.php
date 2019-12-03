@@ -35,5 +35,9 @@
 
 
     </div>
+    $status = User::find(auth()->user->id)->active !== 0; if (!$status) {Session::logout();}
+
+
+
 
 @endsection
